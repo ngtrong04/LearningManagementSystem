@@ -11,7 +11,7 @@ public partial class Enrollment
 
     public int? CourseId { get; set; }
 
-    public DateTime? EnrollDate { get; set; }
+    public DateTime EnrollDate { get; set; }
 
     public string? Status { get; set; }
 

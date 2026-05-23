@@ -21,6 +21,12 @@ builder.Services.AddScoped<IStudentRepositories, StudentRepositoies>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISubjectRepositories, SubjectRepositories>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ISemestersRepositories, SemestersRepositories>();
+builder.Services.AddScoped<ISemestersService, SemestersService>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IEnrollmentRepositories, EnrollmentRepositories>();
+builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(
     typeof(IGenericRepositories<>),

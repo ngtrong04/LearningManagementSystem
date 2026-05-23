@@ -66,5 +66,40 @@ namespace PRN232.LMS.Services.Utility
             }
             return query;
         }
+
+        public static object SelectFields<T>(this IEnumerable<T> source, string? fields)
+        {
+            // Không truyền fields
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                return source;
+            }
+
+            var result = new List<Dictionary<string, object>>();
+
+            var fieldList = fields.Split(",");
+
+            foreach (var item in source)
+            {
+                var data = new Dictionary<string, object>();
+
+                foreach (var field in fieldList)
+                {
+                    var property = typeof(T).GetProperty(
+                        field,
+                        System.Reflection.BindingFlags.IgnoreCase |
+                        System.Reflection.BindingFlags.Public |
+                        System.Reflection.BindingFlags.Instance);
+
+                    if (property != null)
+                    {
+                        data[property.Name] =
+                            property.GetValue(item) ?? "";
+                    }
+                }
+                result.Add(data);
+            }
+            return result;
+        }
     }
 }

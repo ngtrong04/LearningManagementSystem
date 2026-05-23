@@ -9,9 +9,9 @@ public partial class Semester
 
     public string SemesterName { get; set; } = null!;
 
-    public DateTime? StartDate { get; set; }
+    public DateTime StartDate { get; set; }
 
-    public DateTime? EndDate { get; set; }
+    public DateTime EndDate { get; set; }
 
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 }
