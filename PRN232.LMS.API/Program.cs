@@ -37,16 +37,24 @@ builder.Services.AddScoped(
 
 var app = builder.Build();
 
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+
+//    if (!db.Database.CanConnect())
+//    {
+//        throw new InvalidOperationException("Cannot connect to the LMS database. Make sure PostgreSQL is running and the connection string is correct.");
+//    }
+
+//    //DbSeeder.Seed(db);
+//}
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
 
-    if (!db.Database.CanConnect())
-    {
-        throw new InvalidOperationException("Cannot connect to the LMS database. Make sure PostgreSQL is running and the connection string is correct.");
-    }
-
-    //DbSeeder.Seed(db);
+    db.Database.Migrate();
+    DbSeeder.Seed(db);
 }
 // Configure the HTTP request pipeline.
 
