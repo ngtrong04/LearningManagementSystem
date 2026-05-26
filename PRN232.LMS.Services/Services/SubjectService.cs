@@ -69,17 +69,17 @@ namespace PRN232.LMS.Services.Services
             IQueryable<Subject> subjectQuery = _unitOfWork.Subjects.GetQueryable();
 
             // Search 
-            subjectQuery = StubjectQueryExtensions.Search(subjectQuery, query);
+            subjectQuery = SubjectQueryExtensions.Search(subjectQuery, query);
 
             // Sort 
 
-            subjectQuery = StubjectQueryExtensions.Sort(subjectQuery, query);
+            subjectQuery = SubjectQueryExtensions.Sort(subjectQuery, query);
 
             // Total Items
             int totalItems = await subjectQuery.CountAsync();
 
 
-            subjectQuery = StubjectQueryExtensions.Paging(subjectQuery, query);
+            subjectQuery = SubjectQueryExtensions.Paging(subjectQuery, query);
 
 
             List<Subject> subjects = await subjectQuery.ToListAsync();

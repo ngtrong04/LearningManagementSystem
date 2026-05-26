@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +13,8 @@ namespace PRN232.LMS.Services.IServices
         Task<ApiResponse<List<EnrollmentResponse>>> GetAllAsync(QueryParameters query);
 
         Task<EnrollmentResponse?> GetByIdAsync(int id);
+
+        Task<ApiResponse<List<EnrollmentResponse>>> GetByCourseIdAsync(int courseId, bool expandStudent);
         Task<ApiResponse<EnrollmentResponse>> CreateAsync(
        CreateEnrollmentRequest request);
 

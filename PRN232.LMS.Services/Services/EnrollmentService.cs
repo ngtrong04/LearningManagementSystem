@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,6 +82,43 @@ namespace PRN232.LMS.Services.Services
             }
 
             return enrollment.ToEnrollmentResponse();
+        }
+
+        public async Task<ApiResponse<List<EnrollmentResponse>>> GetByCourseIdAsync(int courseId, bool expandStudent)
+        {
+            // Kiểm tra course có tồn tại không
+            var courseExists = await _unitOFWork.Courses.GetQueryable()
+                .AnyAsync(x => x.CourseId == courseId);
+
+            if (!courseExists)
+            {
+                return new ApiResponse<List<EnrollmentResponse>>
+                {
+                    success = false,
+                    message = $"Course with id {courseId} not found",
+                    Data = null
+                };
+            }
+
+            // Build query enrollments theo courseId
+            IQueryable<Enrollment> query = _unitOFWork.Enrollments.GetQueryable()
+                .Where(x => x.CourseId == courseId)
+                .Include(x => x.Course);
+
+            // Nếu có ?expand=student thì Include thêm Student
+            if (expandStudent)
+            {
+                query = query.Include(x => x.Student);
+            }
+
+            var enrollments = await query.ToListAsync();
+
+            return new ApiResponse<List<EnrollmentResponse>>
+            {
+                success = true,
+                message = $"Get enrollments for course {courseId} successfully",
+                Data = enrollments.ToEnrollmentResponseList()
+            };
         }
 
         public async Task<ApiResponse<EnrollmentResponse?>> UpdateAsync(int id, UpdateEnrollmentRequest request)

@@ -9,7 +9,7 @@ using PRN232.LMS.Models.RequestModel;
 
 namespace PRN232.LMS.Services.Utility
 {
-    public static class StubjectQueryExtensions
+    public static class SubjectQueryExtensions
     {
         public static IQueryable<Subject> Search(this IQueryable<Subject> query, QueryParameters request)
         {
